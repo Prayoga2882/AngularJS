@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AngularJS-Prayoga (5180411043)</title>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+</head>
+<body ng-app="myApps">
+	<div ng-controller="MHSController">
+		<p>
+			Search : <input type="text" ng-model="Searchtext">
+		</p>
+		<table width="50%" border="1" cellpadding="5" cellspacing="0">
+			<thead>
+				<tr>
+					<th><input type="text" ng-model="NIM"></th>
+					<th>
+						<input type="text" ng-model="NAMA"></th>
+					</th>
+					<th><input type="text" ng-model="ALAMAT"></th>
+					<th><input type="text" ng-model="jurusan"></th>
+					<th><button ng-click="insert()">Add</button></th>
+				</tr>
+				<tr>
+					<th>NIM</th>
+					<th>NAMA</th>
+					<th>ALAMAT</th>
+					<th>JURUSAN</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-show="filteredData==0">
+					<td colspan="4">
+						No Data!
+					</td>
+				</tr>
+				<tr ng-repeat="player in players | filter:Searchtext ">
+					<td>{{ player.NIM }}</td>
+					<td>{{ player.NAMA }}</td>
+					<td>{{ player.ALAMAT }}</td>
+					<td>{{ player.jurusan }}</td>
+					<td><a href="#" ng-click="delete($index)">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script type="text/javascript" >
+
+	var app = angular.module("myApps", []);
+	app.controller("MHSController", function($scope){
+		$scope.players = [
+			{NIM:"5180411047", ALAMAT:"Makasar", NAMA:"Joko prabowo", jurusan:"Informatika"}, 
+			{NIM:"5180411021", ALAMAT:"Lampung", NAMA:"Siswanto", jurusan:"Management"}, 
+			{NIM:"5180411031", ALAMAT:"Surabaya", NAMA:"Bambang", jurusan:"Akuntansi"}, 
+			{NIM:"5180411051", ALAMAT:"Yogyakarta", NAMA:"Andi", jurusan:"Perbankan"},  
+			{NIM:"5180411012", ALAMAT:"Jakarta", NAMA:"Bagus Setiawan", jurusan:"Sistem Informatika"},  
+			{NIM:"5180411044", ALAMAT:"Lombok", NAMA:"Uzumaki Bayu", jurusan:"Elektro"}, 
+		];
+
+		$scope.alamat = [
+			"Yogyakarta", "Jakarta", "Surabaya", "Lombok", "Lampung", "Makasar", "Bali"
+		];
+
+		$scope.insert = function(){
+			$scope.players.push({
+				NIM: $scope.NIM, NAMA : $scope.NAMA,  ALAMAT : $scope.ALAMAT, jurusan: $scope.jurusan
+			});
+			$scope.clearForm();
+		};
+
+		$scope.clearForm = function(){
+			$scope.NIM = ""; $scope.NAMA = ""; $scope.ALAMAT = ""; $scope.jurusan = ""
+		}
+
+		$scope.delete = function(index){
+			$scope.players.splice(index, 1);
+		}
+	});
+</script>
+</html>
